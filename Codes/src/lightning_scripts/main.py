@@ -39,7 +39,6 @@ log_dir = ckp.get_path("logs")
 
 logger = setup_logger(name="pytorch_lightning",
                       save_dir=log_dir,
-                      distributed_rank=get_rank(),
                       color=True,
                       abbrev_name=None,
                       print_to_console=True if args.debug else False)
@@ -80,16 +79,11 @@ if "train" in args.mode:
             )
         logger.info(msg)
 
-    testTube_logger = pl.loggers.TestTubeLogger(save_dir=log_dir,
-                                                name="TestTube_{}_{}".format(args.model, args.dataset)
-                                                )
-
     wandb_logger = pl.loggers.wandb.WandbLogger(name="Model: {} Datset: {} Des : {} ".format(args.model,
                                                                                              args.dataset,
                                                                                              args.wandb_name_ext, ),
                                                 id=args.wandb_id,
-                                                project="Thermal Segmentation",
-                                                entity="tufts",
+                                                project="ftnet",
                                                 offline=args.debug,
                                                 save_dir=log_dir,
                                                 )
@@ -99,7 +93,7 @@ if "train" in args.mode:
         args.val_batch_size = max(1, int(args.val_batch_size / max(1, args.gpus)))
         args.workers = max(1, int(args.workers / max(1, args.gpus)))
 
-    checkpoint_callbacks = [pl.callbacks.LearningRateMonitor(), ProgressBar(logger)]
+    checkpoint_callbacks = [pl.callbacks.LearningRateMonitor()]
 
     if args.train_only:
         model = thermal_edge_trainer_train_only(args=args, ckp=ckp, logger=logger)
@@ -113,16 +107,16 @@ if "train" in args.mode:
     else:
         model = thermal_edge_trainer(args=args, ckp=ckp, logger=logger)
 
-        checkpoint_callbacks.append(pl.callbacks.model_checkpoint.ModelCheckpoint(dirpath=ckpt_dir,
-                                                                                  filename="{epoch}-{val_avg_mIOU_Acc:.4f}",
-                                                                                  save_top_k=3,
-                                                                                  verbose=True,
-                                                                                  every_n_val_epochs=1,
-                                                                                  monitor="val_avg_mIOU_Acc",
-                                                                                  mode="max",
-                                                                                  save_last=True,
-                                                                                  )
-                                    )
+        # checkpoint_callbacks.append(pl.callbacks.model_checkpoint.ModelCheckpoint(dirpath=ckpt_dir,
+        #                                                                           filename="{epoch}-{val_avg_mIOU_Acc:.4f}",
+        #                                                                           save_top_k=3,
+        #                                                                           verbose=True,
+        #                                                                           every_n_val_epochs=1,
+        #                                                                           monitor="val_avg_mIOU_Acc",
+        #                                                                           mode="max",
+        #                                                                           save_last=True,
+        #                                                                           )
+        #                             )
 
         checkpoint_callbacks.append(pl.callbacks.model_checkpoint.ModelCheckpoint(dirpath=ckpt_dir,
                                                                                   filename="{epoch}-{val_mIOU:.4f}",
@@ -134,67 +128,33 @@ if "train" in args.mode:
                                                                                   )
                                     )
 
-        checkpoint_callbacks.append(pl.callbacks.model_checkpoint.ModelCheckpoint(dirpath=ckpt_dir,
-                                                                                  filename="{epoch}-{val_mAcc:.4f}",
-                                                                                  save_top_k=3,
-                                                                                  verbose=True,
-                                                                                  monitor="val_mAcc",
-                                                                                  mode="max",
-                                                                                  every_n_val_epochs=1,
-                                                                                  )
-                                    )
+        # checkpoint_callbacks.append(pl.callbacks.model_checkpoint.ModelCheckpoint(dirpath=ckpt_dir,
+        #                                                                           filename="{epoch}-{val_mAcc:.4f}",
+        #                                                                           save_top_k=3,
+        #                                                                           verbose=True,
+        #                                                                           monitor="val_mAcc",
+        #                                                                           mode="max",
+        #                                                                           every_n_val_epochs=1,
+        #                                                                           )
+        #                             )
 
     trainer = pl.Trainer(default_root_dir=args.save_dir,
                          resume_from_checkpoint=args.resume,
                          gpus=args.gpus,
                          num_nodes=args.num_nodes,
-                         logger=[testTube_logger, wandb_logger],
+                         logger=[wandb_logger],
                          max_epochs=args.epochs,
-                         amp_level="O0",
-                         sync_batchnorm=True,
-                         distributed_backend=args.distributed_backend,
-                         accumulate_grad_batches=args.accumulate_grad_batches,
+                        #  sync_batchnorm=True,
+                        #  accumulate_grad_batches=args.accumulate_grad_batches,
                          callbacks=checkpoint_callbacks,
-                         fast_dev_run=args.debug,
-                         plugins=DDPPlugin(find_unused_parameters=True),
-                         deterministic=True,
-                         replace_sampler_ddp=False)
+                        #  fast_dev_run=args.debug,
+                        #  plugins=DDPPlugin(find_unused_parameters=True),
+                        #  deterministic=True,
+                        #  replace_sampler_ddp=False
+                        )
 
     trainer.fit(model)
-    '''
-    Note: train_test provides inconsistent results on ddp. Please avoid this on ddp
-    '''
-    if args.mode == "train_test":
-        trainer_v2 = pl.Trainer(fast_dev_run=args.debug,
-                                distributed_backend="dp",
-                                gpus=1,
-                                deterministic=True,
-                                callbacks=ProgressBar(logger),
-                                )
-
-        ckpt_list = {}
-        for _ckpt in range(len(trainer.checkpoint_callbacks)):
-            logger.info("Testing: monitor metric: {}".format(trainer.checkpoint_callbacks[_ckpt].monitor
-                                                             )
-                        )
-            ckpt_path = trainer.checkpoint_callbacks[_ckpt].best_model_path
-
-            if os.path.isfile(ckpt_path):
-                ckpt_list["{}".format(trainer.checkpoint_callbacks[_ckpt].monitor)] = ckpt_path
-                if trainer.checkpoint_callbacks[_ckpt].last_model_path != "":
-                    ckpt_list["last"] = trainer.checkpoint_callbacks[_ckpt].last_model_path
-
-        for name, path in ckpt_list.items():
-            logger.info("Best checkpoint path: {}".format(path))
-            model = thermal_edge_trainer.load_from_checkpoint(checkpoint_path=path,
-                                                              args=args,
-                                                              ckp=ckp,
-                                                              train=False,
-                                                              logger=logger
-                                                              )
-            trainer_v2.test_name = name
-            trainer_v2.test(model=model)
-
+ 
 elif args.mode == "test":
     if args.test_checkpoint is not None:
         t_checkpoint = args.test_checkpoint
@@ -225,11 +185,7 @@ elif args.mode == "test":
     trainer = pl.Trainer(gpus=args.gpus,
                          num_nodes=args.num_nodes,
                          max_epochs=1,
-                         distributed_backend="dp",
-                         amp_level="O0",
-                         callbacks=[ProgressBar(logger)],
                          fast_dev_run=False,
-                         progress_bar_refresh_rate=0,
                          deterministic=True,
                          replace_sampler_ddp=False,
                          )

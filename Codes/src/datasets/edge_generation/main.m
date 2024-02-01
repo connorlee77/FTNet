@@ -1,8 +1,8 @@
 clc;clear all;close all;
 %  , 'soda'
-datasets = {'cityscapes','soda','scutseg','mfn'};
-path = 'D:\processed_dataset/';
-labels_path = {'CITYSCAPE_5000/', 'SODA/', 'SCUTSEG/','MFN/',  };
+datasets = {'cartd'};
+path = '/home/connor/repos/split_thermal_custom/cartd';
+labels_path = {'/home/connor/repos/split_thermal_custom/cartd'};
 radius = [2,1,1,1];
 % numWorker = 6; % Number of matlab workers for parallel computing
 % delete(gcp('nocreate'));
@@ -12,7 +12,7 @@ for idxSet = 1:length(datasets)
         setList = {'train'};
         data_path = labels_path{1};
         r = radius(1);
-    elseif strcmp(datasets{idxSet}, 'soda')
+    elseif strcmp(datasets{idxSet}, 'cartd')
         setList = {'train', 'val', 'test'};
         data_path = labels_path{2};
         r = radius(2);

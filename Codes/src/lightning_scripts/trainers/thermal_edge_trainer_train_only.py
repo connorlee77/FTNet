@@ -109,12 +109,7 @@ class SegmentationTrainLightningModel(LightningModule):
 
         self.custom_logger.info('Setting Up Scheduler')
 
-        if self.trainer.use_ddp:
-            processes = self.hparams.args.gpus * self.hparams.args.num_nodes
-        elif self.trainer.use_ddp2:
-            processes = self.hparams.args.num_nodes
-        else:
-            processes = 1
+        processes = 1
         iters_per_epoch = math.ceil(len(self.train_dataset) / self.hparams.args.train_batch_size /
                                     processes) // self.trainer.accumulate_grad_batches
         self.custom_logger.info('Iterations per epoch computed for scheduler is {}'.format(iters_per_epoch))
@@ -134,7 +129,7 @@ class SegmentationTrainLightningModel(LightningModule):
     def train_dataloader(self):
         train_sampler = make_data_sampler(dataset=self.train_dataset,
                                           shuffle=True,
-                                          distributed=(self.trainer.use_ddp or self.trainer.use_ddp2))
+                                          distributed=False)
 
         train_batch_sampler = make_multiscale_batch_data_sampler(sampler=train_sampler,
                                                                  batch_size=self.hparams.args.train_batch_size,

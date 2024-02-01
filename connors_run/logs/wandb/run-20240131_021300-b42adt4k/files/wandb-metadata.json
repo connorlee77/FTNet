@@ -1,0 +1,231 @@
+{
+    "os": "Linux-5.4.0-169-generic-x86_64-with-glibc2.10",
+    "python": "3.8.18",
+    "heartbeatAt": "2024-01-31T10:13:00.810550",
+    "startedAt": "2024-01-31T10:13:00.124813",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--mode",
+        "train",
+        "--train_only",
+        "False",
+        "--no-of-filters",
+        "128",
+        "--num-blocks",
+        "2",
+        "--edge-extracts",
+        "3",
+        "--loss-weight",
+        "20",
+        "--model",
+        "ftnet",
+        "--pretrain-checkpoint",
+        "/home/connor/repos/FTNet/weights/ckpt/last.ckpt",
+        "--pretrained-base",
+        "False",
+        "--backbone",
+        "resnext101_32x8d",
+        "--dataset",
+        "cartd",
+        "--dataset-path",
+        "/home/connor/repos/split_thermal_custom/cartd",
+        "--base-size",
+        "640",
+        "--crop-size",
+        "512",
+        "--train-batch-size",
+        "16",
+        "--val-batch-size",
+        "16",
+        "--test-batch-size",
+        "1",
+        "--epochs",
+        "100",
+        "--optimizer",
+        "SGD",
+        "--lr",
+        "0.001",
+        "--scheduler-type",
+        "poly_warmstartup",
+        "--warmup-iters",
+        "0",
+        "--warmup-factor",
+        "0.3333",
+        "--warmup-method",
+        "linear",
+        "--save-images-as-subplots",
+        "False",
+        "--save-images",
+        "False",
+        "--debug",
+        "False",
+        "--workers",
+        "16",
+        "--momentum",
+        "0.9",
+        "--weight-decay",
+        "0.0001",
+        "--beta1",
+        "0.9",
+        "--beta2",
+        "0.999",
+        "--epsilon",
+        "1e-8",
+        "--seed",
+        "0",
+        "--gpus",
+        "1",
+        "--num-nodes",
+        "1",
+        "--distributed-backend",
+        "dp",
+        "--wandb-name-ext",
+        "",
+        "--save-dir",
+        "/home/connor/repos/FTNet/connors_run"
+    ],
+    "state": "running",
+    "program": "./../lightning_scripts/main.py",
+    "codePathLocal": null,
+    "codePath": "Codes/src/lightning_scripts/main.py",
+    "git": {
+        "remote": "git@github.com:shreyaskamathkm/FTNet.git",
+        "commit": "a412c4209d411e3e940bfb0f70acab6001ed80e5"
+    },
+    "email": "connorlee77@gmail.com",
+    "root": "/home/connor/repos/FTNet",
+    "host": "Carson",
+    "username": "connor",
+    "executable": "/home/connor/miniforge3/envs/ftnet/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 20,
+    "cpu_freq": {
+        "current": 1763.6622,
+        "min": 1200.0,
+        "max": 4340.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1200.238,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.026,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 4104.578,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1353.828,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1350.541,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.019,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.017,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.029,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 4121.252,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.012,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.512,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1201.572,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 3410.752,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1236.8,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1209.067,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.116,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.003,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.13,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 4083.711,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1200.041,
+            "min": 1200.0,
+            "max": 4300.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 3665.956069946289,
+            "used": 2949.0348205566406
+        }
+    },
+    "gpu": "Quadro RTX 8000",
+    "gpu_count": 2,
+    "gpu_devices": [
+        {
+            "name": "Quadro RTX 8000",
+            "memory_total": 51539607552
+        },
+        {
+            "name": "Quadro RTX 8000",
+            "memory_total": 51539607552
+        }
+    ],
+    "memory": {
+        "total": 125.48208618164062
+    }
+}

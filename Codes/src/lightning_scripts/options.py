@@ -44,6 +44,11 @@ def parse_args():
                         type=str2bool,
                         default=True,
                         help='Use pretrained ImageNet backbone')
+    
+    parser.add_argument('--pretrain-checkpoint',
+                        type=str,
+                        default='',
+                        help='Use pretrained ImageNet backbone')
 
     parser.add_argument('--dilation',
                         type=str2bool,
@@ -55,7 +60,7 @@ def parse_args():
     parser.add_argument('--dataset',
                         type=str,
                         default='soda',
-                        choices=['cityscapes_thermal_combine', 'soda', 'mfn', 'scutseg'],
+                        choices=['cityscapes_thermal_combine', 'soda', 'mfn', 'scutseg', 'cartd'],
                         help='Dataset to be utilized (default: soda)')
 
     parser.add_argument('--dataset-path',

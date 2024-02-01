@@ -1,0 +1,194 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.8.18
+    cli_version: 0.16.2
+    framework: lightning
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1706695980.134433
+    t:
+      1:
+      - 1
+      - 9
+      - 41
+      - 51
+      - 55
+      2:
+      - 1
+      - 9
+      - 41
+      - 51
+      - 55
+      3:
+      - 7
+      - 13
+      - 14
+      - 23
+      4: 3.8.18
+      5: 0.16.2
+      8:
+      - 5
+      13: linux-x86_64
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+args/mode:
+  desc: null
+  value: train
+args/train_only:
+  desc: null
+  value: false
+args/model:
+  desc: null
+  value: ftnet
+args/backbone:
+  desc: null
+  value: resnext101_32x8d
+args/pretrained_base:
+  desc: null
+  value: false
+args/pretrain_checkpoint:
+  desc: null
+  value: /home/connor/repos/FTNet/weights/ckpt/last.ckpt
+args/dilation:
+  desc: null
+  value: false
+args/dataset:
+  desc: null
+  value: cartd
+args/dataset_path:
+  desc: null
+  value: /home/connor/repos/split_thermal_custom/cartd
+args/base_size:
+  desc: null
+  value:
+  - 640
+args/crop_size:
+  desc: null
+  value:
+  - 512
+args/workers:
+  desc: null
+  value: 16
+args/no_of_filters:
+  desc: null
+  value: 128
+args/edge_extracts:
+  desc: null
+  value:
+  - 3
+args/num_blocks:
+  desc: null
+  value: 2
+args/train_batch_size:
+  desc: null
+  value: 16
+args/val_batch_size:
+  desc: null
+  value: 16
+args/test_batch_size:
+  desc: null
+  value: 1
+args/accumulate_grad_batches:
+  desc: null
+  value: 1
+args/test_monitor:
+  desc: null
+  value: val_mIOU
+args/test_monitor_path:
+  desc: null
+  value: None
+args/wandb_id:
+  desc: null
+  value: b42adt4k
+args/wandb_name_ext:
+  desc: null
+  value: ''
+args/epochs:
+  desc: null
+  value: 100
+args/loss_weight:
+  desc: null
+  value: 20
+args/optimizer:
+  desc: null
+  value: SGD
+args/lr:
+  desc: null
+  value: 0.001
+args/momentum:
+  desc: null
+  value: 0.9
+args/nesterov:
+  desc: null
+  value: false
+args/weight_decay:
+  desc: null
+  value: 0.0001
+args/beta1:
+  desc: null
+  value: 0.9
+args/beta2:
+  desc: null
+  value: 0.999
+args/epsilon:
+  desc: null
+  value: 1.0e-08
+args/scheduler_type:
+  desc: null
+  value: poly_warmstartup
+args/warmup_iters:
+  desc: null
+  value: 0
+args/warmup_factor:
+  desc: null
+  value: 0.3333
+args/warmup_method:
+  desc: null
+  value: linear
+args/gamma:
+  desc: null
+  value: 0.5
+args/resume:
+  desc: null
+  value: None
+args/save_dir:
+  desc: null
+  value: /home/connor/repos/FTNet/connors_run
+args/test_checkpoint:
+  desc: null
+  value: None
+args/save_images:
+  desc: null
+  value: false
+args/save_images_as_subplots:
+  desc: null
+  value: false
+args/debug:
+  desc: null
+  value: false
+args/seed:
+  desc: null
+  value: 0
+args/num_nodes:
+  desc: null
+  value: 1
+args/gpus:
+  desc: null
+  value: 1
+args/distributed_backend:
+  desc: null
+  value: dp
+ckp:
+  desc: null
+  value: <core.utils.filesystem.checkpoint object at 0x7f05648f8be0>
+train:
+  desc: null
+  value: true
+logger:
+  desc: null
+  value: <Logger pytorch_lightning (DEBUG)>

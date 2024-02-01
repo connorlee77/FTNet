@@ -35,6 +35,7 @@ class MixSoftmaxCrossEntropyLoss(nn.CrossEntropyLoss):
     def forward(self, *inputs: torch.Tensor, **kwargs: Any) -> torch.Tensor:
         if isinstance(inputs[0], tuple):
             preds, target = tuple(inputs)
+            
             inputs = tuple(list(preds) + [target])
 
         if self.aux:

@@ -7,7 +7,9 @@ datasets = {
     'cityscapes_thermal_split': CityscapesThermalsSplitDataset,
     'soda': SODADataset,
     'mfn': MFNDataset,
-    'scutseg': SCUTSEGDataset}
+    'scutseg': SCUTSEGDataset,
+    'cartd' : CARTDDataset
+}
 
 
 def get_segmentation_dataset(name, **kwargs):

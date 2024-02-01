@@ -14,7 +14,7 @@ from torchmetrics import ConfusionMatrix as pl_ConfusionMatrix
 from torchmetrics.classification import IoU
 
 BatchNorm2d = nn.BatchNorm2d
-
+import time
 
 # https://github.com/hszhao/semseg/blob/master/tool/train.py
 
@@ -38,25 +38,26 @@ class SegmentationLightningModel(BaseTrainer):
         class_map = torch.argmax(class_map.long(), 1)
         edge_pred = torch.mean(
             ((edge_map > 0) == edges).float(), dim=[1, 2, 3])
-
         self.train_edge_accuracy.update(edge_pred)
         self.train_confmat.update(preds=class_map, target=target)
-        self.train_IOU.update(preds=class_map, target=target)
-
+        # t1 = time.time()
+        # self.train_IOU.update(preds=class_map, target=target)
+        # print('iou update time: ', time.time() - t1)
         log_dict = OrderedDict({'loss': loss_val})
         self.log('loss', loss_val)
-
         return log_dict
 
     def training_epoch_end(self, outputs):
         confusion_matrix = self.train_confmat.compute()
-        iou = self.train_IOU.compute()
+        # iou = self.train_IOU.compute()
         accuracy = self.accuracy_(confusion_matrix)
 
-        log_dict = {"train_mIOU": torch.mean(iou),
-                    "train_mAcc": torch.mean(accuracy),
-                    "train_avg_mIOU_Acc": (torch.mean(iou) + torch.mean(accuracy)) / 2,
-                    "train_edge_accuracy": self.train_edge_accuracy.compute()}
+        # log_dict = {"train/mIOU": torch.mean(iou),
+        #             "train/mAcc": torch.mean(accuracy),
+        #             "train/edge_accuracy": self.train_edge_accuracy.compute()}
+        log_dict = {
+                    "train/mAcc": torch.mean(accuracy),
+                    "train/edge_accuracy": self.train_edge_accuracy.compute()}
 
         log_dict["loss"] = torch.stack(
             [output["loss"] for output in outputs]).mean()
@@ -98,10 +99,9 @@ class SegmentationLightningModel(BaseTrainer):
         iou = self.val_IOU.compute()
         accuracy = self.accuracy_(confusion_matrix)
 
-        log_dict = {"val_mIOU": torch.mean(iou),
-                    "val_mAcc": torch.mean(accuracy),
-                    "val_avg_mIOU_Acc": (torch.mean(iou) + torch.mean(accuracy)) / 2,
-                    "val_edge_accuracy": self.val_edge_accuracy.compute()}
+        log_dict = {"val/mIOU": torch.mean(iou),
+                    "val/mAcc": torch.mean(accuracy),
+                    "val/edge_accuracy": self.val_edge_accuracy.compute()}
 
         log_dict["val_loss"] = torch.stack(
             [output["val_loss"] for output in outputs]).mean()
@@ -168,7 +168,6 @@ class SegmentationLightningModel(BaseTrainer):
 
         log_dict = {"test_mIOU": torch.mean(iou),
                     "test_mAcc": torch.mean(accuracy),
-                    "test_avg_mIOU_Acc": (torch.mean(iou) + torch.mean(accuracy)) / 2,
                     "test_edge_accuracy": self.test_edge_accuracy.compute(),
                     }
 

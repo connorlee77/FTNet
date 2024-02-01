@@ -1,0 +1,195 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.8.18
+    cli_version: 0.16.2
+    framework: lightning
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1706698392.683001
+    t:
+      1:
+      - 1
+      - 9
+      - 41
+      - 51
+      - 55
+      2:
+      - 1
+      - 9
+      - 41
+      - 51
+      - 55
+      3:
+      - 5
+      - 7
+      - 13
+      - 14
+      - 23
+      4: 3.8.18
+      5: 0.16.2
+      8:
+      - 5
+      13: linux-x86_64
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+ckp:
+  desc: null
+  value: <core.utils.filesystem.checkpoint object at 0x7fbfc42d5f40>
+train:
+  desc: null
+  value: true
+logger:
+  desc: null
+  value: <Logger pytorch_lightning (DEBUG)>
+args/lr:
+  desc: null
+  value: 0.001
+args/gpus:
+  desc: null
+  value: 1
+args/mode:
+  desc: null
+  value: train
+args/seed:
+  desc: null
+  value: 0
+args/beta1:
+  desc: null
+  value: 0.9
+args/beta2:
+  desc: null
+  value: 0.999
+args/debug:
+  desc: null
+  value: false
+args/gamma:
+  desc: null
+  value: 0.5
+args/model:
+  desc: null
+  value: ftnet
+args/epochs:
+  desc: null
+  value: 100
+args/resume:
+  desc: null
+  value: None
+args/dataset:
+  desc: null
+  value: cartd
+args/epsilon:
+  desc: null
+  value: 1.0e-08
+args/workers:
+  desc: null
+  value: 16
+args/backbone:
+  desc: null
+  value: resnext50_32x4d
+args/dilation:
+  desc: null
+  value: false
+args/momentum:
+  desc: null
+  value: 0.9
+args/nesterov:
+  desc: null
+  value: false
+args/save_dir:
+  desc: null
+  value: /home/connor/repos/FTNet/connors_run
+args/wandb_id:
+  desc: null
+  value: b42adt4k
+args/base_size:
+  desc: null
+  value:
+  - 640
+args/crop_size:
+  desc: null
+  value:
+  - 512
+args/num_nodes:
+  desc: null
+  value: 1
+args/optimizer:
+  desc: null
+  value: SGD
+args/num_blocks:
+  desc: null
+  value: 2
+args/train_only:
+  desc: null
+  value: false
+args/loss_weight:
+  desc: null
+  value: 20
+args/save_images:
+  desc: null
+  value: false
+args/dataset_path:
+  desc: null
+  value: /home/connor/repos/split_thermal_custom/cartd
+args/test_monitor:
+  desc: null
+  value: val_mIOU
+args/warmup_iters:
+  desc: null
+  value: 0
+args/weight_decay:
+  desc: null
+  value: 0.0001
+args/edge_extracts:
+  desc: null
+  value:
+  - 3
+args/no_of_filters:
+  desc: null
+  value: 128
+args/warmup_factor:
+  desc: null
+  value: 0.3333
+args/warmup_method:
+  desc: null
+  value: linear
+args/scheduler_type:
+  desc: null
+  value: poly_warmstartup
+args/val_batch_size:
+  desc: null
+  value: 16
+args/wandb_name_ext:
+  desc: null
+  value: ''
+args/pretrained_base:
+  desc: null
+  value: false
+args/test_batch_size:
+  desc: null
+  value: 1
+args/test_checkpoint:
+  desc: null
+  value: None
+args/train_batch_size:
+  desc: null
+  value: 16
+args/test_monitor_path:
+  desc: null
+  value: None
+args/distributed_backend:
+  desc: null
+  value: dp
+args/pretrain_checkpoint:
+  desc: null
+  value: /home/connor/repos/FTNet/weights/ckpt/last.ckpt
+args/accumulate_grad_batches:
+  desc: null
+  value: 1
+args/save_images_as_subplots:
+  desc: null
+  value: false
